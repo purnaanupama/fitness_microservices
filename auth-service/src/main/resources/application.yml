@@ -1,0 +1,16 @@
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth_service
+  datasource:
+    url: jdbc:mysql://localhost:3306/fitness_user_db?serverTimezone=UTC
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+
