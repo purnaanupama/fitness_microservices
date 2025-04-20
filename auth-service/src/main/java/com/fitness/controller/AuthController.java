@@ -23,4 +23,9 @@ public class AuthController {
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
     }
+
+    @GetMapping("/{userId}/validate")
+    public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
+        return ResponseEntity.ok(authService.existByUserId(userId));
+    }
 }

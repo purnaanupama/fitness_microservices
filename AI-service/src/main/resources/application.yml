@@ -1,18 +1,18 @@
+server:
+  port: 8083
+
 spring:
   application:
-    name: activity-service
+    name: ai-service
   data:
     mongodb:
-      uri: mongodb://localhost:27017/fitness_activity
-      database: fitness_activity
+      uri: mongodb://localhost:27017/fitness_recommendation
+      database: fitness_recommendation
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-
-server:
-  port: 8082
 
 eureka:
   client:
@@ -26,4 +26,3 @@ rabbitmq:
     name: activity.queue
   routing:
     key: activity.tracking
-

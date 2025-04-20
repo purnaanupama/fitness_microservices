@@ -4,13 +4,17 @@ server:
 
 spring:
   application:
-    name: auth_service
+    name: auth-service
   datasource:
     url: jdbc:mysql://localhost:3306/fitness_user_db?serverTimezone=UTC
     username: root
-    password:
+    password: pass
   jpa:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQLDialect
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
