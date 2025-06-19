@@ -18,16 +18,15 @@ import java.util.List;
 @NoArgsConstructor
 public class Recommendation {
     @Id
-
     private String id;
     private String activityId;
     private String userId;
     private String activityType;
+    private String duration;
     private String recommendation;
     private List<String> improvements;
     private List<String> suggestions;
     private List<String> safety;
-
     @CreatedDate
     private LocalDateTime createdAt;
 }

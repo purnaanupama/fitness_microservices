@@ -1,0 +1,28 @@
+{
+  "name": "report-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "amqplib": "^0.10.8",
+    "cors": "^2.8.5",
+    "eureka-js-client": "^4.5.0",
+    "express": "^5.1.0",
+    "get-stream": "^9.0.1",
+    "html-pdf-chrome": "^0.8.4",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10",
+    "pdf-creator-node": "^2.3.5",
+    "pdf-lib": "^1.17.1",
+    "pdfkit": "^0.17.1",
+    "puppeteer": "^24.9.0"
+  }
+}
