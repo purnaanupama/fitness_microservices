@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-
 @Configuration
 public class RabbitMQConfig {
 
@@ -23,6 +22,12 @@ public class RabbitMQConfig {
 
  @Value("${rabbitmq.routing.key}")
  private String routingKey;
+
+ @Value("${rabbitmq.report.exchange.name}")
+ private String reportExchange;
+
+ @Value("${rabbitmq.report.routing.key}")
+ private String reportRoutingKey;
 
 //Creates a durable queue named activity.queue
  @Bean

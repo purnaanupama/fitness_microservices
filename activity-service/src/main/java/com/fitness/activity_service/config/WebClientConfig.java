@@ -19,4 +19,11 @@ public class WebClientConfig {
                 .baseUrl("http://AUTH-SERVICE")
                 .build();
     }
+
+    @Bean
+    public WebClient aiServiceWebClient(WebClient.Builder webClientBuilder) {
+        return webClientBuilder
+                .baseUrl("http://AI-SERVICE")
+                .build();
+    }
 }

@@ -6,8 +6,6 @@ import com.fitness.activity_service.dto.ActivityResponse;
 import com.fitness.activity_service.model.Activity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,16 +18,22 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ActivityService {
 
-    private static final Logger log = LoggerFactory.getLogger(ActivityService.class);
     private final ActivityRepository activityRepository;
     private final UserValidationService userValidationService;
     private final RabbitTemplate rabbitTemplate;
+    private final DeleteRecommendationService deleteRecommendationService;
 
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
     @Value("${rabbitmq.routing.key}")
     private String routingKey;
+
+    @Value("${rabbitmq.report.exchange.name}")
+    private String reportExchange;
+
+    @Value("${rabbitmq.report.routing.key}")
+    private String reportRoutingKey;
 
     public ActivityResponse trackActivity(ActivityRequest request) {
         boolean isValidUser = userValidationService.validateUser(request.getUserId());
@@ -58,6 +62,21 @@ public class ActivityService {
         }
         return mapToResponse(savedActivity);
     }
+
+    public Void printReport(String activityId) {
+        // Find the activity from id
+        Activity existingActivity = activityRepository.findById(activityId)
+                .orElseThrow(() -> new RuntimeException("Activity not found with id: " + activityId));
+        try {
+            // Send to report service using dedicated report exchange
+            rabbitTemplate.convertAndSend(reportExchange, reportRoutingKey, existingActivity);
+            log.info("Activity sent to report service: {}", activityId);
+        } catch (Exception e) {
+            log.error("Failed to send activity to report service", e);
+        }
+        return null;
+    }
+
     private ActivityResponse mapToResponse(Activity activity){
         ActivityResponse activityResponse = new ActivityResponse();
         activityResponse.setId(activity.getId());
@@ -84,4 +103,16 @@ public class ActivityService {
                 .map(this::mapToResponse)
                 .orElseThrow(()->new RuntimeException("Activity not found with id: " + activityId));
     }
+
+    public boolean deleteById(String activityId) {
+        if(activityRepository.existsById(activityId)){
+            activityRepository.deleteById(activityId);
+            //Delete recommendations associated with the activity
+            deleteRecommendationService.deleteRecommendationByActivityId(activityId);
+            return true;
+        }
+        return false;
+    }
+
+
 }

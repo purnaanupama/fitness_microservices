@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Activity Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; }
+    h1 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Activity Report</h1>
+  <p><strong>Activity ID:</strong> {{id}}</p>
+  <p><strong>User ID:</strong> {{userId}}</p>
+  <p><strong>Type:</strong> {{type}}</p>
+  <p><strong>Duration:</strong> {{duration}} minutes</p>
+  <p><strong>Calories Burned:</strong> {{caloriesBurned}}</p>
+  <p><strong>Distance:</strong> {{additionalMetrics.distance}}</p>
+  <p><strong>Average Speed:</strong> {{additionalMetrics.averageSpeed}}</p>
+  <p><strong>Max Heart Rate:</strong> {{additionalMetrics.maxHeartRate}}</p>
+  <p><strong>Start Time:</strong> {{startTimeFormatted}}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each metrics}}
+      <tr>
+        <td>{{this.metric}}</td>
+        <td>{{this.value}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
+</html>

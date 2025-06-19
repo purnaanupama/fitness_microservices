@@ -20,4 +20,13 @@ public class RecommendationService {
        return recommendationRepository.findByActivityId(activityId)
                .orElseThrow(()-> new RuntimeException("No recommendation Found for this activity: "+ activityId));
     }
+
+    public boolean deleteRecommendationByActivityId(String activityId) {
+        if (recommendationRepository.existsByActivityId(activityId)) {
+            recommendationRepository.deleteByActivityId(activityId);
+            return true;
+        }
+        return false;
+    }
+
 }
